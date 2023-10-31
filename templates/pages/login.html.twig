@@ -1,0 +1,47 @@
+{% extends 'authentication.html.twig' %}
+
+{% block title %}Connexion {{ parent() }}{% endblock %}
+
+{% block body %}
+<section class="form df-fdc-aic-jcse">
+    <form method="post" class="df-fdc-aic-jcse">
+        <input 
+            type="email"
+            value="{{ last_username }}" 
+            name="email" 
+            id="inputEmail" 
+            autocomplete="email" 
+            required 
+            placeholder="Mail" 
+            class="mb-32"
+        >
+        
+        <input 
+            ype="password" 
+            name="password" 
+            id="inputPassword" 
+            autocomplete="current-password" 
+            required 
+            placeholder="Mot de passe" 
+            class="mb-32"
+        >
+
+        <input 
+            type="hidden" 
+            name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+            class="mb-32"
+        >
+
+        <div class="mb-32">
+            <label>
+                <input type="checkbox" name="_remember_me"> Se souvenir de moi
+            </label>
+        </div>
+
+        <button type="submit" class="mb-32">Se connecter</button>
+    </form>
+
+    <a href="{{ path('user_register') }}"><button class="btn-scdr">S'inscrire</button></a>
+<section>
+{% endblock %}

@@ -5,15 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} | ENI Sortir{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('style/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/authentication.css') }}">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{{ path('user_register') }}">Inscription</a></li>
-            <li><a href="{{ path('user_login') }}">Connexion</a></li>
-            <li><a href="{{ path('user_logout') }}">Déconnexiont</a></li>
-        </ul>
-    </nav>
+    <a href="{{ path('outing_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de l'ENI" class="logo"/></a>
     {% block body %}{% endblock %}
 </body>
 </html>

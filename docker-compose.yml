@@ -1,0 +1,9 @@
+version: "3"
+services:
+  database:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: enipassword
+      MYSQL_DATABASE: EniDatabase
+    ports:
+      - 3306:3306

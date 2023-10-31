@@ -1,0 +1,121 @@
+/***** Normalize *****/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    outline: none;
+    border: none;
+    text-decoration: none;
+  }
+
+/***** Fonts *****/
+@font-face {
+    font-family: "main";
+    src: url(../font/OpenSans-VariableFont_wdth\,wght.ttf);
+    font-display: swap;
+  }
+
+* {
+    font-family: main;
+    font-size: 14px;
+    color: #3C3C3C;
+    font-weight: 100;
+  }
+
+h1 {
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+a {
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+/***** Layout *****/
+  
+input:not([type="checkbox"]), select {
+    padding: 12px;
+    border-radius: none;
+    border: 1.6px solid #ABABAB;
+    width: 300px;
+}
+
+input::placeholder {
+    color: #ABABAB;
+}
+
+input:hover , select:hover {
+    border: 1.6px solid #004982;
+}
+
+button {
+    color: #032E54;
+    padding: 12px;
+    border: 1.6px solid #032E54;
+    background: #fff;
+    font-weight: 700;
+    min-width: 200px;
+}
+
+.btn-scdr {
+    color: #95B258;
+    border-color: #95B258;
+}
+
+button:hover {
+    background: #032E54;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 500px) {
+    button{
+        width: 80vw;
+    }
+
+}
+  
+/***** Flex *****/
+.df-aic-jcsb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.df-fdc-aic-jcse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.df-fdc-aic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.df-alc-jcc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/***** margin padding *****/
+
+.mb-32 {
+    margin-bottom: 32px;
+}

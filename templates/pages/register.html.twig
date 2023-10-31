@@ -1,0 +1,45 @@
+{% extends 'authentication.html.twig' %}
+
+{% block title %}Inscription {{ parent() }}{% endblock %}
+
+{% block body %}
+    {{ form_start(registrationForm, {'attr': {'class': 'df-fdc-aic-jcse form'}}) }}
+
+    {{ form_row(registrationForm.firstName, {
+        'label': false,
+        'attr': {
+            'placeholder': 'Prénom',
+            'class': 'mb-32'
+        },
+    }) }}
+    {{ form_row(registrationForm.lastName, {
+        'label': false,
+        'attr': {
+            'placeholder': 'Nom',
+            'class': 'mb-32'
+        },
+    }) }}
+    {{ form_row(registrationForm.email, {
+        'label': false,
+        'attr': {
+            'placeholder': 'Email',
+            'class': 'mb-32'
+        },
+    }) }}
+    {{ form_row(registrationForm.plainPassword, {
+        'label': false,
+        'attr': {
+            'placeholder': 'Mot de passe',
+            'class': 'mb-32'
+        }
+    }) }}
+    {{ form_row(registrationForm.campus, {
+        'label': false,
+        'attr': {
+            'class': 'mb-32'
+        }
+    }) }}
+
+    <button type="submit">S'inscrire</button>
+{{ form_end(registrationForm) }}
+{% endblock %}
