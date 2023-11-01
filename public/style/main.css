@@ -42,11 +42,16 @@ h2 {
 a {
     font-size: 13px;
     text-transform: uppercase;
+    font-weight: 600;
+}
+
+a:hover {
+    color: #95B258;
 }
 
 /***** Layout *****/
   
-input:not([type="checkbox"]), select {
+input:not([type="checkbox"]), select, textarea {
     padding: 12px;
     border-radius: none;
     border: 1.6px solid #ABABAB;
@@ -59,6 +64,11 @@ input::placeholder {
 
 input:hover , select:hover {
     border: 1.6px solid #004982;
+}
+
+textarea {
+    resize: none;
+    height: 150px;
 }
 
 button {
@@ -82,7 +92,7 @@ button:hover {
 }
 
 @media (max-width: 500px) {
-    button{
+    button, input:not([type="checkbox"]), select, textarea{
         width: 80vw;
     }
 
@@ -93,6 +103,28 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.df-aic-jcse {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.df-aic {
+    display: flex;
+    align-items: center;
+}
+
+.df-jcse {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.df-aifs-jcc {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .df-fdc-aic-jcse {
@@ -114,8 +146,65 @@ button:hover {
     justify-content: center;
 }
 
+.df-rr-jcse {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+}
+
 /***** margin padding *****/
 
 .mb-32 {
     margin-bottom: 32px;
+}
+
+.mb-64 {
+    margin-bottom: 64px;
+}
+
+.ml-32 {
+    margin-left: 32px;
+}
+
+/****** Header *****/
+nav {
+    height: 100px;
+    padding: 0 64px 0 32px;
+}
+
+@media (max-width: 450px) {
+    nav {
+        flex-direction: column;
+        padding: 16px 32px;
+        margin-bottom: 32px;
+    }
+
+    nav ul {
+        margin-top: 16px;
+    }
+}
+
+footer {
+    height: 60px;
+    background: #032E54;
+}
+
+footer p {
+    color: #fff;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form li {
+    text-align: center;
+    color: #AB4040;
+}
+
+form label {
+    align-self: start;
+    margin-bottom: 8px;
 }

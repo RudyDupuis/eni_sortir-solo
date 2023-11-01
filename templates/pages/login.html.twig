@@ -1,10 +1,18 @@
-{% extends 'authentication.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Connexion {{ parent() }}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ asset('style/authentication.css') }}">{% endblock %}
 
 {% block body %}
+<a href="{{ path('outing_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de l'ENI" class="logo"/></a>
+
 <section class="form df-fdc-aic-jcse">
     <form method="post" class="df-fdc-aic-jcse">
+
+        {% if error %}
+            <ul><li>{{ error.messageKey|trans(error.messageData, 'security') }}<li></ul>
+        {% endif %}
+
         <input 
             type="email"
             value="{{ last_username }}" 
@@ -43,5 +51,5 @@
     </form>
 
     <a href="{{ path('user_register') }}"><button class="btn-scdr">S'inscrire</button></a>
-<section>
+</section>
 {% endblock %}

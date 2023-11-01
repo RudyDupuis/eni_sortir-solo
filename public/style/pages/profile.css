@@ -1,0 +1,24 @@
+body {
+    background: url(../../images/bg700px.png) left bottom / auto no-repeat;
+}
+
+.profile_img {
+    height: 180px;
+    width: 180px;
+    border-radius: 100%;
+    background-image: url('../../images/defaultPP.png'); background-size: cover; background-position: center;
+}
+
+@media (max-width: 650px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .titlePP {
+        margin-bottom: 32px;
+    }
+
+    body {
+        background: url(../../images/bg430px.png) left bottom / auto no-repeat;
+    }
+}

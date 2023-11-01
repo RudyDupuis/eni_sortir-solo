@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <title>{% block title %} | ENI Sortir{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('style/main.css') }}">
+    {% block css %}{% endblock %}
 </head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="{{ path('user_register') }}">Inscription</a></li>
-            <li><a href="{{ path('user_login') }}">Connexion</a></li>
-            <li><a href="{{ path('user_logout') }}">Déconnexiont</a></li>
-        </ul>
-    </nav>
+<body>    
     {% block body %}{% endblock %}
 </body>
 </html>

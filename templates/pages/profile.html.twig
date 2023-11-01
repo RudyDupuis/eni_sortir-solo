@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block css %}<link rel="stylesheet" href="{{ asset('style/pages/profile.css') }}">{% endblock %}
+
+{% block title %}Mon profil {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include 'components/nav.html.twig' %}
+
+    <section class="df-jcse mb-32 content">
+        <div class="df-fdc-aic titlePP">
+            <h1 class="mb-64">Mon profil</h1>
+            {% if user %}
+                <div class="profile_img" style="background-image: url('{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}'); background-size: cover; background-position: center;"></div>
+            {% else %}
+                <div class="profile_img"></div>
+            {% endif %}
+        </div>
+        
+        <div class="df-fdc-aic-jcse">
+            {{ form_start(profileForm, {'attr': {'class': 'df-fdc-aic-jcse mb-32'}}) }}
+
+                {{ form_row(profileForm.firstName, {
+                    'label': false,
+                    'attr': {
+                        'class': 'mb-32'
+                    },
+                }) }}
+                {{ form_row(profileForm.lastName, {
+                    'label': false,
+                    'attr': {
+                        'class': 'mb-32'
+                    },
+                }) }}
+                {{ form_row(profileForm.email, {
+                    'label': false,
+                    'attr': {
+                        'class': 'mb-32'
+                    },
+                }) }}
+                {{ form_row(profileForm.plainPassword, {
+                    'label': false,
+                    'attr': {
+                        'placeholder': 'Mot de passe',
+                        'class': 'mb-32'
+                    }
+                }) }}
+                {{ form_row(profileForm.profilePicture, {
+                    'attr': {
+                        'class': 'mb-32'
+                    }
+                }) }}
+                {{ form_row(profileForm.campus, {
+                    'label': false,
+                    'attr': {
+                        'class': 'mb-32'
+                    }
+                }) }}
+
+                <button type="submit">Modifier mon profil</button>
+            {{ form_end(profileForm) }}
+
+            <a href="{{ path('user_logout') }}"><button class="btn-scdr">Se déconnecter</button></a>
+        </div>
+    </section>
+
+    {% include "components/footer.html.twig" %}
+{% endblock %}

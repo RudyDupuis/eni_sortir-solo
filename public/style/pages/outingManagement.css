@@ -1,0 +1,28 @@
+body {
+    background: url(../../images/bgreverse500px.png) right bottom / auto no-repeat;
+}
+
+.outing-management_img {
+    height: 150px;
+    width: 300px;
+    border-radius: 10px;
+    background-image: url('../../images/defaultOutingPicture.png'); background-size: cover; background-position: center;
+}
+
+@media (max-width: 1100px) {
+    .content{
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 680px) {
+    .form, .form-and-buttons{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-second-part {
+        margin: 0;
+    }
+}

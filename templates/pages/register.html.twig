@@ -1,8 +1,11 @@
-{% extends 'authentication.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Inscription {{ parent() }}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ asset('style/authentication.css') }}">{% endblock %}
 
 {% block body %}
+    <a href="{{ path('outing_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de l'ENI" class="logo"/></a>
+
     {{ form_start(registrationForm, {'attr': {'class': 'df-fdc-aic-jcse form'}}) }}
 
     {{ form_row(registrationForm.firstName, {

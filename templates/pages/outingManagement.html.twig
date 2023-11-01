@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block css %}<link rel="stylesheet" href="{{ asset('style/pages/outingManagement.css') }}">{% endblock %}
+
+{% block title %}
+    {% if action == 'create' %}
+        Créer une sortie
+    {% elseif action == 'update' %}
+        Modifier une sortie
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+    <section class="df-rr-jcse content">
+        <div class="df-fdc-aic mb-32">
+            <h1 class="mb-64">
+            {% if action == 'create' %}
+                Créer une sortie
+            {% elseif action == 'update' %}
+                Modifier une sortie
+            {% endif %}
+            </h1>
+            {% if action == 'create' %}
+                <div class="outing-management_img"></div>
+            {% elseif action == 'update' %}
+                <div class="outing-management_img" style="background-image: url('{{ asset('uploads/outing_pictures/' ~ outing.outingImage) }}'); background-size: cover; background-position: center;"></div>
+            {% endif %} 
+        </div>
+
+        <div class="form-and-buttons">
+            {{ form_start(outingForm, {'attr': {'class': 'df-aifs-jcc mb-32 form'}}) }}
+                <div class="df-fdc-aic-jcse">
+                    {{ form_row(outingForm.name, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Nom de la sortie',
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.outingDate, {
+                        'attr': {
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.registrationDeadline, {
+                        'attr': {
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.numberPlaces, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Nombre de place',
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.duration, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Durée de la sortie (min)',
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.description, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Description',
+                            'class': 'mb-32 textarea'
+                        },
+                    }) }}
+                </div>
+                <div class="df-fdc-aic-jcse ml-32 form-second-part">
+                    {{ form_row(outingForm.campus, {
+                        'label': false,
+                        'attr': {
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.outingImage, {
+                        'attr': {
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.namePlace, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Nom du lieu',
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.street, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Rue',
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.postalCode, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Code postal',
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    {{ form_row(outingForm.city, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Ville',
+                            'class': 'mb-32'
+                        },
+                    }) }}
+                    
+                    <button type="submit">
+                    {% if action == 'create' %}
+                        Créer une sortie
+                    {% elseif action == 'update' %}
+                        Modifier la sortie
+                    {% endif %}
+                    </button>
+                </div>
+            {{ form_end(outingForm) }}
+        </div>
+    </section>
+
+    {% include "components/footer.html.twig" %}
+{% endblock %}

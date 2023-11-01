@@ -1,7 +1,9 @@
 {% extends "base.html.twig" %}
+
 {% block title %}Accueil {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Accueil</h1>
-    <h2>Bienvenue sur ENI Sortir</h2>
+    {% include "components/nav.html.twig" %}
+    <h1>Organisez  Vos sorties  entre stagiaire !</h1>
+    {% include "components/footer.html.twig" %}
 {% endblock %}

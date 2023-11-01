@@ -53,7 +53,7 @@ class Outing
     #[ORM\Column(length: 50)]
     private ?string $city = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $cancelReason = null;
 
     #[ORM\ManyToOne(inversedBy: 'outingsCreated')]
