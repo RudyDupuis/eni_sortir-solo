@@ -49,6 +49,10 @@ a:hover {
     color: #95B258;
 }
 
+.danger {
+    color: #AB4040;
+}
+
 /***** Layout *****/
   
 input:not([type="checkbox"]), select, textarea {
@@ -85,6 +89,11 @@ button {
     border-color: #95B258;
 }
 
+.btn-danger {
+    color: #AB4040;
+    border-color: #AB4040;
+}
+
 button:hover {
     background: #032E54;
     color: #fff;
@@ -96,6 +105,17 @@ button:hover {
         width: 80vw;
     }
 
+}
+
+.strong {
+    font-weight: 600;
+}
+
+.bg-white {
+    background: #fff;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 0 8px;
 }
   
 /***** Flex *****/
@@ -114,6 +134,11 @@ button:hover {
 .df-aic {
     display: flex;
     align-items: center;
+}
+
+.df-jcsb {
+    display: flex;
+    justify-content: space-between;
 }
 
 .df-jcse {
@@ -140,6 +165,13 @@ button:hover {
     align-items: center;
 }
 
+.df-fdc-aic-jcc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .df-alc-jcc {
     display: flex;
     align-items: center;
@@ -152,7 +184,14 @@ button:hover {
     justify-content: space-evenly;
 }
 
+.flex-cr {
+    flex-direction: column-reverse;
+}
+
 /***** margin padding *****/
+.mb-16 {
+    margin-bottom: 16px;
+}
 
 .mb-32 {
     margin-bottom: 32px;
@@ -166,7 +205,15 @@ button:hover {
     margin-left: 32px;
 }
 
-/****** Header *****/
+.main-padding {
+    padding: 32px 10%;
+}
+
+/****** Componants *****/
+main {
+    min-height: calc(100vh - 160px);
+}
+
 nav {
     height: 100px;
     padding: 0 64px 0 32px;
@@ -207,4 +254,11 @@ form li {
 form label {
     align-self: start;
     margin-bottom: 8px;
+}
+
+.outing_img {
+    height: 150px;
+    width: 300px;
+    border-radius: 10px;
+    background-image: url('../../images/defaultOutingPicture.png'); background-size: cover; background-position: center;
 }

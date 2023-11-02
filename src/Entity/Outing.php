@@ -222,7 +222,7 @@ class Outing
         return $this->cancelReason;
     }
 
-    public function setCancelReason(string $cancelReason): static
+    public function setCancelReason(?string $cancelReason): static
     {
         $this->cancelReason = $cancelReason;
 

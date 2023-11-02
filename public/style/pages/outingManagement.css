@@ -2,11 +2,8 @@ body {
     background: url(../../images/bgreverse500px.png) right bottom / auto no-repeat;
 }
 
-.outing-management_img {
-    height: 150px;
-    width: 300px;
-    border-radius: 10px;
-    background-image: url('../../images/defaultOutingPicture.png'); background-size: cover; background-position: center;
+.cancelform-hidden {
+    display: none !important;
 }
 
 @media (max-width: 1100px) {

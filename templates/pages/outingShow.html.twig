@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+{% block css %}<link rel="stylesheet" href="{{ asset('style/pages/outingShow.css') }}">{% endblock %}
+
+{% block title %}
+    {% if outing %}
+        {{ outing.name }} {{ parent() }}
+    {% else %} 
+        Erreur 404 {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+
+    {% if outing %}
+    <main class="main-padding">
+        <section class="df-jcsb mb-64 outing-show_top">
+            <div>
+                <h1>{{ outing.name }}</h1>
+                <p class="mb-32 mobile-center">Le {{ outing.outingDate | date('d/m/Y') }} à {{ outing.outingDate | date('H:i') }}</p>
+                <p class="outing-show_description">{{ outing.description }}</p>
+            </div>
+            <div class="outing_img" style="background-image: url('{{ asset('uploads/outing_pictures/' ~ outing.outingImage) }}'); background-size: cover; background-position: center;"></div>
+        </section>
+
+        {% if outing.cancelReason %}
+        <section class="df-jcsb mb-64">
+            <div>
+                <h2 class="mb-32 danger">Sortie annulée</h2>
+                <p>{{ outing.cancelReason }}</p>
+            </div>
+        </section>
+        {% else %}
+
+        <section class="df-jcsb mb-64">
+            <div>
+                <h2 class="outing-show_registration-title">Inscription</h2>
+                <p><span class="strong">Nombre de participant:</span> {{ outing.registrants.count() }}/{{ outing.numberPlaces }}</p>
+                <p class="mb-16"><span class="strong">Date limite d'inscription:</span> {{ outing.registrationDeadline | date('d/m/Y') }}</p>
+                
+                {% if app.user and outing.registrationDeadline > now %}
+                    {% if outing.registrants.contains(app.user) %}
+                        <a href="{{ path('outing_unsubscribe', {'id': outing.id}) }}"><button>Désinscription</button></a>
+                    {% elseif outing.registrants.count() < outing.numberPlaces %}
+                        <a href="{{ path('outing_subscribe', {'id': outing.id}) }}"><button>Inscription</button></a>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+            <div>
+                <h2 class="bg-white outing-show_place-title">Lieu</h2>
+                <p class="bg-white"><span class="strong">Lieu du rendez-vous:</span> {{ outing.namePlace }} {{ outing.street }} {{ outing.postalCode }} {{ outing.city }}</p>
+                <p class="bg-white"><span class="strong">Campus:</span> {{ outing.campus.name }}</p>
+            </div>
+        </section>
+
+        <section class="mb-64">
+            <h2 class="mb-16">Les participants</h2>
+            <div class="registrant-card_container">
+                {% for registrant in outing.registrants %}
+                <div class="registrant-card df-alc-jcc">
+                    {% if registrant.profilePicture %}
+                        <div class="registrant-card_img" style="background-image: url('{{ asset('uploads/profile_pictures/' ~ registrant.profilePicture) }}'); background-size: cover; background-position: center;"></div>
+                    {% else %}
+                        <div class="registrant-card_img"></div>
+                    {% endif %}
+                    <p class="ml-32">{{ registrant.firstName }} {{ registrant.lastName }}</p>
+                </div>
+                {% else %}
+                <p>Il n'y a aucun participant pour le moment ...</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% endif %}
+
+        {% if app.user and app.user.id == outing.author.id %}
+            <a href="{{ path('outing_update', {'id': outing.id}) }}"><button>Modifier/Annuler</button></a>
+        {% endif %}
+    </main>
+    {% else %}
+    <main class="df-fdc-aic-jcc">
+        <h1 class="mb-64">Erreur 404</h1>
+        <h2> Il n'y a pas de sortie à cette url ...</h2>
+    </main>
+    {% endif %}
+
+    {% include "components/footer.html.twig" %}
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Outing;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,28 +22,60 @@ class OutingRepository extends ServiceEntityRepository
         parent::__construct($registry, Outing::class);
     }
 
-//    /**
-//     * @return Outing[] Returns an array of Outing objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findNext20Outings(): array
+    {
+        $now = new \DateTime();
 
-//    public function findOneBySomeField($value): ?Outing
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $this->createQueryBuilder('o')
+            ->where('o.outingDate >= :now')
+            ->setParameter('now', $now)
+            ->orderBy('o.outingDate', 'ASC')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findNext20OutingsByUserCampus(User $user): array
+    {
+        $now = new \DateTime();
+
+        return $this->createQueryBuilder('o')
+            ->join('o.campus', 'c')
+            ->where('o.outingDate >= :now')
+            ->andWhere('c = :userCampus')
+            ->setParameter('now', $now)
+            ->setParameter('userCampus', $user->getCampus())
+            ->orderBy('o.outingDate', 'ASC')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOutingsByAuthor(User $user): array
+    {
+        $now = new \DateTime();
+
+        return $this->createQueryBuilder('o')
+            ->where('o.author = :user')
+            ->andWhere('o.outingDate > :now')
+            ->setParameter('user', $user)
+            ->setParameter('now', $now)
+            ->orderBy('o.outingDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOutingsByRegistrant(User $user): array
+    {
+        $now = new \DateTime();
+
+        return $this->createQueryBuilder('o')
+            ->join('o.registrants', 'u')
+            ->where('u = :user')
+            ->andWhere('o.outingDate > :now')
+            ->setParameter('user', $user)
+            ->setParameter('now', $now)
+            ->getQuery()
+            ->getResult();
+    }
 }

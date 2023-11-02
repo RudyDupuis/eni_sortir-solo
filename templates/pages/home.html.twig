@@ -1,9 +1,28 @@
+{% import 'macros/sectionCard.html.twig' as macros %}
+
 {% extends "base.html.twig" %}
+{% block css %}<link rel="stylesheet" href="{{ asset('style/pages/home.css') }}">{% endblock %}
+{% block js %}<script src="{{ asset('js/home.js') }}"></script>{% endblock %}
 
 {% block title %}Accueil {{ parent() }}{% endblock %}
 
 {% block body %}
     {% include "components/nav.html.twig" %}
     <h1>Organisez  Vos sorties  entre stagiaire !</h1>
+
+    {{ macros.renderCard(next20Outings, 'Les sorties du moment', 'next20Outings--hidden', 'next20Outings_show-more') }}
+
+    {% if app.user %}
+        {{ macros.renderCard(next20OutingsByUserCampus, 'Les sorties liées à mon campus', 'next20OutingsByUserCampus--hidden', 'next20OutingsByUserCampus_show-more') }}
+    {% endif %}
+
+    {% if app.user %}
+        {{ macros.renderCard(outingsByAuthor, 'Les sorties que j\'ai créé', 'outingsByAuthor--hidden', 'outingsByAuthor_show-more') }}
+    {% endif %}
+
+    {% if app.user %}
+        {{ macros.renderCard(outingsByRegistrant, 'Les sorties auxquels je participe', 'outingsByRegistrant--hidden', 'outingsByRegistrant_show-more') }}
+    {% endif %}
+
     {% include "components/footer.html.twig" %}
 {% endblock %}

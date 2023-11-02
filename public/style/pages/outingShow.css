@@ -1,0 +1,93 @@
+body {
+    background: url(../../images/bgreverse500px.png) right bottom / auto no-repeat;
+}
+
+.outing-show_description {
+    max-width: 60%;
+}
+
+.registrant-card_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    justify-items: center;
+    width: 70%;
+}
+
+.registrant-card {
+    padding: 8px 16px;
+    border-radius: 10px;
+    background: #e8e8e8;
+    width: max-content;
+    flex-direction: row;
+}
+
+.registrant-card_img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-image: url('../../images/defaultPP.png'); background-size: cover; background-position: center;
+}
+
+@media (max-width: 950px) {
+    .registrant-card_container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        background: none;
+    }
+    section{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    section div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    button {
+        align-self: center;
+    }
+
+    .outing-show_top {
+        flex-direction: column-reverse;
+    }
+
+    .outing_img {
+        margin-bottom: 32px;
+        align-self: center;
+    }
+
+    .mobile-center, h1, h2 {
+        text-align: center;
+        align-self: center;
+    }
+
+    .outing-show_description {
+        max-width: none;
+    }
+
+    .outing-show_place-title {
+        padding: 32px 0;
+    }
+
+    .outing-show_registration-title {
+        margin-bottom: 32px;
+    }
+
+    .registrant-card_container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .registrant-card {
+        width: 100%;
+    }
+}
+

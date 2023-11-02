@@ -9,7 +9,7 @@
     <section class="df-jcse mb-32 content">
         <div class="df-fdc-aic titlePP">
             <h1 class="mb-64">Mon profil</h1>
-            {% if user %}
+            {% if user.profilePicture %}
                 <div class="profile_img" style="background-image: url('{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}'); background-size: cover; background-position: center;"></div>
             {% else %}
                 <div class="profile_img"></div>
