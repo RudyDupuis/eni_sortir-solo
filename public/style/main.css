@@ -53,6 +53,10 @@ a:hover {
     color: #AB4040;
 }
 
+.tac {
+    text-align: center;
+}
+
 /***** Layout *****/
   
 input:not([type="checkbox"]), select, textarea {
@@ -156,6 +160,12 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+}
+
+.df-aifs-jcse {
+    display: flex;
+    align-items: flex-start;
     justify-content: space-evenly;
 }
 

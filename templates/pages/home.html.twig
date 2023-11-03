@@ -10,19 +10,59 @@
     {% include "components/nav.html.twig" %}
     <h1>Organisez  Vos sorties  entre stagiaire !</h1>
 
-    {{ macros.renderCard(next20Outings, 'Les sorties du moment', 'next20Outings--hidden', 'next20Outings_show-more') }}
+    <section class="outing_section">
+        <h2 class="mb-32">Les sorties du moment</h2>
+        {{ macros.renderCard(next20Outings, 'next20Outings--hidden', 'next20Outings_show-more') }}
+    </section>
 
     {% if app.user %}
-        {{ macros.renderCard(next20OutingsByUserCampus, 'Les sorties liées à mon campus', 'next20OutingsByUserCampus--hidden', 'next20OutingsByUserCampus_show-more') }}
+    <section class="outing_section">
+        <h2 class="mb-32">Les sorties liées à mon campus</h2>
+        {{ macros.renderCard(next20OutingsByUserCampus, 'next20OutingsByUserCampus--hidden', 'next20OutingsByUserCampus_show-more') }}
+    </section>
     {% endif %}
 
     {% if app.user %}
-        {{ macros.renderCard(outingsByAuthor, 'Les sorties que j\'ai créé', 'outingsByAuthor--hidden', 'outingsByAuthor_show-more') }}
+    <section class="outing_section">
+        <h2 class="mb-32">Les sorties que j'ai créé</h2>
+        {{ macros.renderCard(outingsByAuthor, 'outingsByAuthor--hidden', 'outingsByAuthor_show-more') }}
+    </section>
     {% endif %}
 
     {% if app.user %}
-        {{ macros.renderCard(outingsByRegistrant, 'Les sorties auxquels je participe', 'outingsByRegistrant--hidden', 'outingsByRegistrant_show-more') }}
+    <section class="outing_section">
+        <h2 class="mb-32">Les sorties auxquels je participe</h2>
+        {{ macros.renderCard(outingsByRegistrant, 'outingsByRegistrant--hidden', 'outingsByRegistrant_show-more') }}
+    </section>
     {% endif %}
+
+    <section class="outing_section">
+        <h2 class="mb-32">Rechercher une sortie</h2>
+
+        {{ form_start(searchForm, {'attr': {'class': 'df-aifs-jcse search-form mb-32'}}) }}
+           {{ form_row(searchForm.campus, {
+                'label': false,
+                'attr': {
+                    'class': 'mb-32'
+                },
+            }) }}
+            {{ form_row(searchForm.search, {
+                'label': false,
+                'attr': {
+                    'placeholder': 'Ex: Marathon',
+                    'class': 'mb-32'
+                },
+            }) }}
+
+            <button type="submit">Rechercher</button>
+        {{ form_end(searchForm) }}
+
+        {% if outingsSearch %}
+            {{ macros.renderCard(outingsSearch, 'outingsSearch--hidden', 'outingsSearch_show-more') }}
+        {% else %}
+            <p class="tac">Aucune sortie trouvée</p>
+        {% endif %}
+    </section>
 
     {% include "components/footer.html.twig" %}
 {% endblock %}

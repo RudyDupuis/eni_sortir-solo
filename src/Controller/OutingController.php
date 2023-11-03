@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Outing;
 use App\Form\OutingCancelFormType;
 use App\Form\OutingCreateFormType;
+use App\Form\OutingsSearchFormType;
 use App\Form\OutingUpdateFormType;
 use App\Repository\OutingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,18 +18,38 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class OutingController extends AbstractController
 {
     #[Route('/', name: 'outing_home')]
-    public function index(OutingRepository $outingRepository): Response
+    public function index(Request $request, OutingRepository $outingRepository): Response
     {
         $next20Outings = $outingRepository->findNext20Outings();
-        $next20OutingsByUserCampus = $this->getUser() ? $outingRepository->findNext20OutingsByUserCampus($this->getUser()) : null;
+        $next20OutingsByUserCampus = $this->getUser() ? $outingRepository->findNext20OutingsByCampus($this->getUser()->getCampus()) : null;
         $outingsByAuthor = $this->getUser() ? $outingRepository->findOutingsByAuthor($this->getUser()) : null;
         $outingsByRegistrant = $this->getUser() ?  $outingRepository->findOutingsByRegistrant($this->getUser()) : null;
+
+        $form = $this->createForm(OutingsSearchFormType::class);
+        $form->handleRequest($request);
+
+        $outingsSearch = null;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchByCampus = $form->get('campus')->getData();
+            $searchByName = $form->get('search')->getData();
+
+            if ($searchByCampus && !$searchByName) {
+                $outingsSearch = $outingRepository->findNext20OutingsByCampus($searchByCampus);
+            }
+
+            if ($searchByName) {
+                $outingsSearch = $outingRepository->findByName($searchByName);
+            }
+        }
 
         return $this->render('pages/home.html.twig', [
             'next20Outings' => $next20Outings,
             'next20OutingsByUserCampus' => $next20OutingsByUserCampus,
             'outingsByAuthor' => $outingsByAuthor,
             'outingsByRegistrant' => $outingsByRegistrant,
+            'searchForm' => $form->createView(),
+            'outingsSearch' => $outingsSearch
         ]);
     }
 

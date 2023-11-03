@@ -1,27 +1,24 @@
-{% macro renderCard(outingList, title, sectionClass, showMoreId) %}
-    <section class="outing_section">
-        <h2 class="mb-32">{{ title }}</h2>
-        <section class="card_grid">
-            {% for key, outing in outingList %}
-                <a href="{{ path('outing_show', {'id': outing.id}) }}" class="card {{ key < 3 ? '' : sectionClass }}">
-                    <div class="outing_img" style="background-image: url('{{ asset('uploads/outing_pictures/' ~ outing.outingImage) }}'); background-size: cover; background-position: center;"></div>
-                    {% if outing.cancelReason %}
-                        <div class="card_filter card_filter--red"></div>
-                    {% else %}
-                        <div class="card_filter"></div>
-                    {% endif %}
-                    <h3 class="card_name">{{ outing.name }}</h3>
-                    <p class="card_date">Le {{ outing.outingDate | date('d/m/Y') }}</p>
-                    <p class="card_registrants">Participants: {{ outing.registrants.count() }}/{{ outing.numberPlaces }}</p>
-                </a>
-            {% endfor %}
-        </section>
-        {% if outingList %}
-            {% if outingList|length > 3 %}
-                <p id="{{ showMoreId }}" class="show-more">Voir les autres sorties</p>
-            {% endif %}
-        {% else %}
-            <p class="no-result">Pour le moment il n'y a pas de sortie ...</p>
-        {% endif %}
+{% macro renderCard(outingList, sectionClass, showMoreId) %}
+    <section class="card_grid">
+        {% for key, outing in outingList %}
+            <a href="{{ path('outing_show', {'id': outing.id}) }}" class="card {{ key < 3 ? '' : sectionClass }}">
+                <div class="outing_img" style="background-image: url('{{ asset('uploads/outing_pictures/' ~ outing.outingImage) }}'); background-size: cover; background-position: center;"></div>
+                {% if outing.cancelReason %}
+                    <div class="card_filter card_filter--red"></div>
+                {% else %}
+                    <div class="card_filter"></div>
+                {% endif %}
+                <h3 class="card_name">{{ outing.name }}</h3>
+                <p class="card_date">Le {{ outing.outingDate | date('d/m/Y') }}</p>
+                <p class="card_registrants">Participants: {{ outing.registrants.count() }}/{{ outing.numberPlaces }}</p>
+            </a>
+        {% endfor %}
     </section>
+    {% if outingList %}
+        {% if outingList|length > 3 %}
+            <p id="{{ showMoreId }}" class="show-more">Voir les autres sorties</p>
+        {% endif %}
+    {% else %}
+        <p class="no-result">Pour le moment il n'y a pas de sortie ...</p>
+    {% endif %}
 {% endmacro %}

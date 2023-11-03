@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Campus;
 use App\Entity\Outing;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -35,7 +36,7 @@ class OutingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findNext20OutingsByUserCampus(User $user): array
+    public function findNext20OutingsByCampus(Campus $campus): array
     {
         $now = new \DateTime();
 
@@ -44,8 +45,18 @@ class OutingRepository extends ServiceEntityRepository
             ->where('o.outingDate >= :now')
             ->andWhere('c = :userCampus')
             ->setParameter('now', $now)
-            ->setParameter('userCampus', $user->getCampus())
+            ->setParameter('userCampus', $campus)
             ->orderBy('o.outingDate', 'ASC')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByName(string $name): array
+    {
+        return $this->createQueryBuilder('o')
+            ->where('o.name LIKE :searchName')
+            ->setParameter('searchName', '%' . $name . '%')
             ->setMaxResults(20)
             ->getQuery()
             ->getResult();

@@ -21,3 +21,4 @@ showMoreCards(
 );
 showMoreCards("#outingsByAuthor_show-more", "outingsByAuthor");
 showMoreCards("#outingsByRegistrant_show-more", "outingsByRegistrant");
+showMoreCards("#outingsSearch_show-more", "outingsSearch");
