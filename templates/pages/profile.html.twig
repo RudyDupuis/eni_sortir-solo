@@ -4,11 +4,12 @@
 {% block title %}Mon profil {{ parent() }}{% endblock %}
 
 {% block body %}
-    {% include 'components/nav.html.twig' %}
+    {% include 'components/nav.html.twig' %} 
 
-    <section class="df-jcse mb-32 content">
-        <div class="df-fdc-aic titlePP">
+    <section class="f j-even mb-32 content">
+        <div class="f-col a-cent mb-32">
             <h1 class="mb-64">Mon profil</h1>
+
             {% if user.profilePicture %}
                 <div class="profile_img" style="background-image: url('{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}'); background-size: cover; background-position: center;"></div>
             {% else %}
@@ -16,8 +17,8 @@
             {% endif %}
         </div>
         
-        <div class="df-fdc-aic-jcse">
-            {{ form_start(profileForm, {'attr': {'class': 'df-fdc-aic-jcse mb-32'}}) }}
+        <div class="f-col a-cent j-even">
+            {{ form_start(profileForm, {'attr': {'class': 'f-col a-cent j-even mb-32'}}) }}
 
                 {{ form_row(profileForm.firstName, {
                     'label': false,

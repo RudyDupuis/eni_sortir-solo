@@ -6,8 +6,8 @@
 {% block body %}
 <a href="{{ path('outing_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de l'ENI" class="logo"/></a>
 
-<section class="form df-fdc-aic-jcse">
-    <form method="post" class="df-fdc-aic-jcse">
+<section class="form f-col a-cent j-even">
+    <form method="post" class="f-col a-cent j-even">
 
         {% if error %}
             <ul><li>{{ error.messageKey|trans(error.messageData, 'security') }}<li></ul>

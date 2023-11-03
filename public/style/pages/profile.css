@@ -14,10 +14,6 @@ body {
         flex-direction: column;
     }
 
-    .titlePP {
-        margin-bottom: 32px;
-    }
-
     body {
         background: url(../../images/bg430px.png) left bottom / auto no-repeat;
     }

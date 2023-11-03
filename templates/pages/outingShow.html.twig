@@ -13,8 +13,8 @@
     {% include "components/nav.html.twig" %}
 
     {% if outing %}
-    <main class="main-padding">
-        <section class="df-jcsb mb-64 outing-show_top">
+    <main>
+        <section class="f j-betw mb-64 outing-show_top">
             <div>
                 <h1>{{ outing.name }}</h1>
                 <p class="mb-32 mobile-center">Le {{ outing.outingDate | date('d/m/Y') }} à {{ outing.outingDate | date('H:i') }}</p>
@@ -24,7 +24,7 @@
         </section>
 
         {% if outing.cancelReason %}
-        <section class="df-jcsb mb-64">
+        <section class="f j-betw mb-64">
             <div>
                 <h2 class="mb-32 danger">Sortie annulée</h2>
                 <p>{{ outing.cancelReason }}</p>
@@ -32,7 +32,7 @@
         </section>
         {% else %}
 
-        <section class="df-jcsb mb-64">
+        <section class="f j-betw mb-64">
             <div>
                 <h2 class="outing-show_registration-title">Inscription</h2>
                 <p><span class="strong">Nombre de participant:</span> {{ outing.registrants.count() }}/{{ outing.numberPlaces }}</p>
@@ -50,6 +50,7 @@
             <div>
                 <h2 class="bg-white outing-show_place-title">Lieu</h2>
                 <p class="bg-white"><span class="strong">Lieu du rendez-vous:</span> {{ outing.namePlace }} {{ outing.street }} {{ outing.postalCode }} {{ outing.city }}</p>
+                <p class="bg-white"><span class="strong">Durée de l'événement:</span> {{ outing.duration }} minutes</p>
                 <p class="bg-white"><span class="strong">Campus:</span> {{ outing.campus.name }}</p>
             </div>
         </section>
@@ -58,7 +59,7 @@
             <h2 class="mb-16">Les participants</h2>
             <div class="registrant-card_container">
                 {% for registrant in outing.registrants %}
-                <div class="registrant-card df-alc-jcc">
+                <div class="registrant-card f a-cent j-cent">
                     {% if registrant.profilePicture %}
                         <div class="registrant-card_img" style="background-image: url('{{ asset('uploads/profile_pictures/' ~ registrant.profilePicture) }}'); background-size: cover; background-position: center;"></div>
                     {% else %}
@@ -79,7 +80,7 @@
         {% endif %}
     </main>
     {% else %}
-    <main class="df-fdc-aic-jcc">
+    <main class="f-col a-cent j-cent">
         <h1 class="mb-64">Erreur 404</h1>
         <h2> Il n'y a pas de sortie à cette url ...</h2>
     </main>

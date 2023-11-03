@@ -15,8 +15,9 @@
     {% include "components/nav.html.twig" %}
 
     {% if outing != 'no-result' %}
-    <section class="df-rr-jcse content">
-        <div class="df-fdc-aic mb-32">
+    <section class="f-row-r j-even content">
+        <div class="f-col a-cent mb-32">
+
             <h1 class="mb-64">
             {% if action == 'create' %}
                 Créer une sortie
@@ -24,16 +25,18 @@
                 Modifier une sortie
             {% endif %}
             </h1>
+
             {% if action == 'create' %}
                 <div class="outing_img"></div>
             {% elseif action == 'update' %}
                 <div class="outing_img" style="background-image: url('{{ asset('uploads/outing_pictures/' ~ outing.outingImage) }}'); background-size: cover; background-position: center;"></div>
-            {% endif %} 
+            {% endif %}
+
         </div>
 
-        <div class="form-and-buttons df-fdc-aic">
-            {{ form_start(outingForm, {'attr': {'class': 'df-aifs-jcc mb-32 form'}}) }}
-                <div class="df-fdc-aic-jcse">
+        <div class="form-and-buttons f-col a-cent">
+            {{ form_start(outingForm, {'attr': {'class': 'f a-start j-cent mb-32 form'}}) }}
+                <div class="f-col a-cent j-even">
                     {{ form_row(outingForm.name, {
                         'label': false,
                         'attr': {
@@ -73,7 +76,7 @@
                         },
                     }) }}
                 </div>
-                <div class="df-fdc-aic-jcse ml-32 form-second-part">
+                <div class="f-col a-cent j-even ml-32 form-second-part">
                     {{ form_row(outingForm.campus, {
                         'label': false,
                         'attr': {
@@ -121,6 +124,7 @@
                         Modifier la sortie
                     {% endif %}
                     </button>
+
                 </div>
             {{ form_end(outingForm) }}
 
@@ -128,7 +132,7 @@
                 {% if outing.cancelReason %}
                     <a href="{{ path('outing_removeCancelReason', {'id': outing.id}) }}"><button class="btn-danger mb-64">Maintenir la sortie</button></a>
                 {% else %}
-                    {{ form_start(outingCancelForm, {'attr': {'class': 'df-fdc-aic mb-32 form cancelform-hidden'}}) }}
+                    {{ form_start(outingCancelForm, {'attr': {'class': 'f-col a-cent mb-32 form cancelform-hidden'}}) }}
                         {{ form_row(outingCancelForm.cancelReason, {
                                 'label': false,
                                 'attr': {
@@ -146,7 +150,7 @@
         </div>
     </section>
      {% else %}
-    <main class="df-fdc-aic-jcc">
+    <main class="f-col a-cent j-cent">
         <h1 class="mb-64">Erreur 404</h1>
         <h2> Il n'y a pas de sortie à cette url ...</h2>
     </main>

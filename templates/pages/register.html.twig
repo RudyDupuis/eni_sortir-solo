@@ -6,7 +6,7 @@
 {% block body %}
     <a href="{{ path('outing_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de l'ENI" class="logo"/></a>
 
-    {{ form_start(registrationForm, {'attr': {'class': 'df-fdc-aic-jcse form'}}) }}
+    {{ form_start(registrationForm, {'attr': {'class': 'f-col a-cent j-even form'}}) }}
 
     {{ form_row(registrationForm.firstName, {
         'label': false,
@@ -44,5 +44,5 @@
     }) }}
 
     <button type="submit">S'inscrire</button>
-{{ form_end(registrationForm) }}
+    {{ form_end(registrationForm) }}
 {% endblock %}

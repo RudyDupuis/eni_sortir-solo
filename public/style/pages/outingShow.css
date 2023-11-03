@@ -6,6 +6,7 @@ body {
     max-width: 60%;
 }
 
+/***** Registrant Card *****/
 .registrant-card_container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

@@ -1,6 +1,6 @@
-<nav class="df-aic-jcsb">
-        <a href="{{ path('outing_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de l'ENI" class="logo"/></a>
-        <ul class="df-aic-jcsb">
+<nav class="f a-cent j-betw">
+        <a href="{{ path('outing_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de l'ENI"/></a>
+        <ul class="f a-cent j-betw">
 
             {% if is_granted('ROLE_USER') %}
                 <li><a href="{{ path('outing_create') }}">Créer une sortie</a></li>
@@ -9,6 +9,5 @@
                 <li><a href="{{ path('user_register') }}">Inscription</a></li>
                 <li class="ml-32"><a href="{{ path('user_login') }}">Connexion</a></li>
             {% endif %}
-
         </ul>
 </nav>

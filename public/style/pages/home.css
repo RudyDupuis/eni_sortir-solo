@@ -1,27 +1,7 @@
-h1 {
-    padding: 32px 64px;
-    background: url(../../images/h1bg1440px.png) center / cover;
-    color: #fff;
-}
-
-.outing_section {
-    padding: 32px 10%;
-}
-
-.show-more {
-    text-align: center;
-    padding: 16px 0;
-}
-
 .show-more:hover {
     cursor: pointer;
     color: #95B258;
     font-weight: 300;
-}
-
-.no-result {
-    text-align: center;
-    padding: 32px 0;
 }
 
 
