@@ -8,20 +8,23 @@ use App\Form\OutingCreateFormType;
 use App\Form\OutingsSearchFormType;
 use App\Form\OutingUpdateFormType;
 use App\Repository\OutingRepository;
+use App\Service\ImageManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class OutingController extends AbstractController
 {
     #[Route('/', name: 'outing_home')]
     public function index(Request $request, OutingRepository $outingRepository): Response
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
         $next20Outings = $outingRepository->findNext20Outings();
-        $next20OutingsByUserCampus = $this->getUser() ? $outingRepository->findNext20OutingsByCampus($this->getUser()->getCampus()) : null;
+        $next20OutingsByUserCampus = $this->getUser() ? $outingRepository->findNext20OutingsByCampus($user->getCampus()) : null;
         $outingsByAuthor = $this->getUser() ? $outingRepository->findOutingsByAuthor($this->getUser()) : null;
         $outingsByRegistrant = $this->getUser() ?  $outingRepository->findOutingsByRegistrant($this->getUser()) : null;
 
@@ -38,6 +41,7 @@ class OutingController extends AbstractController
                 $outingsSearch = $outingRepository->findNext20OutingsByCampus($searchByCampus);
             }
 
+            //This research is more important than the previous one. If both fields are filled, she win
             if ($searchByName) {
                 $outingsSearch = $outingRepository->findByName($searchByName);
             }
@@ -54,23 +58,16 @@ class OutingController extends AbstractController
     }
 
     #[Route('/cree-une-sortie', name: 'outing_create')]
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    public function create(Request $request, EntityManagerInterface $entityManager, ImageManager $imageManager): Response
     {
         $outing = new Outing();
         $form = $this->createForm(OutingCreateFormType::class, $outing);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $outingImageFile = $form->get('outingImage')->getData();
+            $newFileName = $imageManager->saveImage($form->get('outingImage')->getData(), null, 'outing_pictures_directory');
 
-            if ($outingImageFile instanceof UploadedFile) {
-                $newFileName = md5(uniqid()) . '.' . $outingImageFile->guessExtension();
-
-                $outingImageFile->move(
-                    $this->getParameter('outing_pictures_directory'),
-                    $newFileName
-                );
-
+            if ($newFileName) {
                 $outing->setOutingImage($newFileName);
             }
 
@@ -90,7 +87,7 @@ class OutingController extends AbstractController
     }
 
     #[Route('/modifier-une-sortie/{id}', name: 'outing_update')]
-    public function update(Request $request, EntityManagerInterface $entityManager, OutingRepository $outingRepository, int $id): Response
+    public function update(Request $request, EntityManagerInterface $entityManager, OutingRepository $outingRepository, ImageManager $imageManager, int $id): Response
     {
         $outing = $outingRepository->find($id);
 
@@ -103,25 +100,9 @@ class OutingController extends AbstractController
             $updateForm->handleRequest($request);
 
             if ($updateForm->isSubmitted() && $updateForm->isValid()) {
-                $outingImageFile = $updateForm->get('outingImage')->getData();
+                $newFileName = $imageManager->saveImage($updateForm->get('outingImage')->getData(), $outing->getOutingImage(), 'outing_pictures_directory');
 
-                if ($outingImageFile instanceof UploadedFile) {
-                    $oldOutingImage = $outing->getOutingImage();
-
-                    if ($oldOutingImage) {
-                        $oldOutingImagePath = $this->getParameter('outing_pictures_directory') . '/' . $oldOutingImage;
-                        if (file_exists($oldOutingImagePath)) {
-                            unlink($oldOutingImagePath);
-                        }
-                    }
-
-                    $newFileName = md5(uniqid()) . '.' . $outingImageFile->guessExtension();
-
-                    $outingImageFile->move(
-                        $this->getParameter('outing_pictures_directory'),
-                        $newFileName
-                    );
-
+                if ($newFileName) {
                     $outing->setOutingImage($newFileName);
                 }
 

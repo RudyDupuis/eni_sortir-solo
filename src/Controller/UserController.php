@@ -10,8 +10,8 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\ProfileFormType;
 use App\Security\AppAuthenticator;
+use App\Service\ImageManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
@@ -75,33 +75,18 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/profile', name: 'user_profile')]
-    public function profile(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function profile(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ImageManager $imageManager): Response
     {
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
         $form = $this->createForm(ProfileFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $newPassword = $form->get('plainPassword')->getData();
-            $profilePictureFile = $form->get('profilePicture')->getData();
+            $newFileName = $imageManager->saveImage($form->get('profilePicture')->getData(), $user->getProfilePicture(), 'profile_pictures_directory');
 
-            if ($profilePictureFile instanceof UploadedFile) {
-                $oldProfilePicture = $user->getProfilePicture();
-
-                if ($oldProfilePicture) {
-                    $oldProfilePicturePath = $this->getParameter('profile_pictures_directory') . '/' . $oldProfilePicture;
-                    if (file_exists($oldProfilePicturePath)) {
-                        unlink($oldProfilePicturePath);
-                    }
-                }
-
-                $newFileName = md5(uniqid()) . '.' . $profilePictureFile->guessExtension();
-
-                $profilePictureFile->move(
-                    $this->getParameter('profile_pictures_directory'),
-                    $newFileName
-                );
-
+            if ($newFileName) {
                 $user->setProfilePicture($newFileName);
             }
 
