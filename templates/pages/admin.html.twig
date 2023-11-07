@@ -31,26 +31,25 @@
             <button type="submit">Chercher</button>
         {{ form_end(searchForm) }}
 
-        {% if userByEmail == null and userById == null %}
-        {% else %}
-            <div class="f-col a-cent mb-32">
-                <h3 class="a-self-start mb-16">Résultats de la recherche par email :</h3>
-                {% if userByEmail is not empty %}
-                    {{ macros.renderCard(userByEmail) }}
-                {% else %}
-                    <p class="tac">Aucun utilisateur trouvé</p>
-                {% endif %}
-            </div>
 
-            <div class="f-col a-cent mb-32">
-                <h3 class="a-self-start  mb-16">Résultats de la recherche par ID :</h3>
-                {% if userById is not empty %}
-                    {{ macros.renderCard(userById) }}
-                {% else %}
-                    <p class="tac">Aucun utilisateur trouvé</p>
-                {% endif %}
-            </div>
-        {% endif %}
+        <div class="f-col a-cent mb-32">
+            <h3 class="a-self-start mb-16">Résultats de la recherche par email :</h3>
+            {% if userByEmail is not empty %}
+                {{ macros.renderCard(userByEmail) }}
+            {% else %}
+                <p class="tac">Aucun utilisateur trouvé</p>
+            {% endif %}
+        </div>
+
+        <div class="f-col a-cent mb-32">
+            <h3 class="a-self-start  mb-16">Résultats de la recherche par ID :</h3>
+            {% if userById is not empty %}
+                {{ macros.renderCard(userById) }}
+            {% else %}
+                <p class="tac">Aucun utilisateur trouvé</p>
+            {% endif %}
+        </div>
+
 
         <h2 class="mb-32">Gérer les rôles</h2>
 

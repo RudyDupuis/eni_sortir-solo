@@ -14,7 +14,6 @@
 {% block body %}
     {% include "components/nav.html.twig" %}
 
-    {% if outing != 'no-result' %}
     <section class="f-row-r j-even content">
         <div class="f-col a-cent mb-32">
 
@@ -149,12 +148,6 @@
 
         </div>
     </section>
-     {% else %}
-    <main class="f-col a-cent j-cent">
-        <h1 class="mb-64">Erreur 404</h1>
-        <h2> Il n'y a pas de sortie à cette url ...</h2>
-    </main>
-    {% endif %}
 
     {% include "components/footer.html.twig" %}
 {% endblock %}

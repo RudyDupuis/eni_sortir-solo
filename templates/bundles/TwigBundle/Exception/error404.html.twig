@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur 404 {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+    <main class="f-col a-cent j-cent">
+        <h1 class="mb-64">Erreur 404</h1>
+        <h2>Cette url n'est pas disponible ...</h2>
+    </main>
+    {% include "components/footer.html.twig" %}
+{% endblock %}

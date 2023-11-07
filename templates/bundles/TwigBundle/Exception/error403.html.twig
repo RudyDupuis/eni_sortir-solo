@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur 403 {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+    <main class="f-col a-cent j-cent">
+        <h1 class="mb-64">Erreur 403</h1>
+        <h2>Vous n'êtes pas autorisé à accéder à cette url ...</h2>
+    </main>
+    {% include "components/footer.html.twig" %}
+{% endblock %}

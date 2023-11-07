@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Security;
 
 class OutingController extends AbstractController
 {
@@ -58,6 +62,7 @@ class OutingController extends AbstractController
     }
 
     #[Route('/cree-une-sortie', name: 'outing_create')]
+    #[IsGranted('ROLE_ANIMATOR')]
     public function create(Request $request, EntityManagerInterface $entityManager, ImageManager $imageManager): Response
     {
         $outing = new Outing();
@@ -87,46 +92,47 @@ class OutingController extends AbstractController
     }
 
     #[Route('/modifier-une-sortie/{id}', name: 'outing_update')]
-    public function update(Request $request, EntityManagerInterface $entityManager, OutingRepository $outingRepository, ImageManager $imageManager, int $id): Response
+    #[IsGranted('ROLE_ANIMATOR')]
+    public function update(Request $request, EntityManagerInterface $entityManager, OutingRepository $outingRepository, ImageManager $imageManager, Security $security, int $id): Response
     {
         $outing = $outingRepository->find($id);
 
         if (!$outing) {
-            $outing = 'no-result';
+            throw new NotFoundHttpException();
         }
 
-        if ($outing != 'no-result') {
-            $updateForm = $this->createForm(OutingUpdateFormType::class, $outing);
-            $updateForm->handleRequest($request);
+        /** @var \App\Entity\User $user */
+        $user = $security->getUser();
 
-            if ($updateForm->isSubmitted() && $updateForm->isValid()) {
-                $newFileName = $imageManager->saveImage($updateForm->get('outingImage')->getData(), $outing->getOutingImage(), 'outing_pictures_directory');
+        if (!$security->isGranted('ROLE_ADMIN') && ($user->getId() !== $outing->getAuthor()->getId())) {
+            throw new AccessDeniedHttpException();
+        }
 
-                if ($newFileName) {
-                    $outing->setOutingImage($newFileName);
-                }
+        $updateForm = $this->createForm(OutingUpdateFormType::class, $outing);
+        $updateForm->handleRequest($request);
 
-                $entityManager->persist($outing);
-                $entityManager->flush();
+        if ($updateForm->isSubmitted() && $updateForm->isValid()) {
+            $newFileName = $imageManager->saveImage($updateForm->get('outingImage')->getData(), $outing->getOutingImage(), 'outing_pictures_directory');
+
+            if ($newFileName) {
+                $outing->setOutingImage($newFileName);
             }
 
-            $cancelForm = $this->createForm(OutingCancelFormType::class, $outing);
-            $cancelForm->handleRequest($request);
+            $entityManager->persist($outing);
+            $entityManager->flush();
+        }
 
-            if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
-                $entityManager->persist($outing);
-                $entityManager->flush();
-            }
+        $cancelForm = $this->createForm(OutingCancelFormType::class, $outing);
+        $cancelForm->handleRequest($request);
 
-            return $this->render('pages/outingManagement.html.twig', [
-                'outingForm' => $updateForm->createView(),
-                'outingCancelForm' => $cancelForm->createView(),
-                'action' => 'update',
-                'outing' => $outing
-            ]);
+        if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
+            $entityManager->persist($outing);
+            $entityManager->flush();
         }
 
         return $this->render('pages/outingManagement.html.twig', [
+            'outingForm' => $updateForm->createView(),
+            'outingCancelForm' => $cancelForm->createView(),
             'action' => 'update',
             'outing' => $outing
         ]);
@@ -138,6 +144,10 @@ class OutingController extends AbstractController
         $outing = $outingRepository->find($id);
         $now = new \DateTime('now');
 
+        if (!$outing) {
+            throw new NotFoundHttpException();
+        }
+
         return $this->render('pages/outingShow.html.twig', [
             'outing' => $outing,
             'now' => $now
@@ -145,10 +155,15 @@ class OutingController extends AbstractController
     }
 
     #[Route('/sortie/{id}/inscription', name: 'outing_subscribe')]
+    #[IsGranted('ROLE_USER')]
     public function subscribe(OutingRepository $outingRepository, EntityManagerInterface $entityManager, int $id)
     {
         $outing = $outingRepository->find($id);
         $now = new \DateTime('now');
+
+        if (!$outing) {
+            throw new NotFoundHttpException();
+        }
 
         if ($outing->getRegistrants()->count() < $outing->getNumberPlaces() && $outing->getRegistrationDeadline() > new \DateTime('now')) {
             $outing->addRegistrant($this->getUser());
@@ -165,9 +180,14 @@ class OutingController extends AbstractController
     }
 
     #[Route('/sortie/{id}/desinscription', name: 'outing_unsubscribe')]
+    #[IsGranted('ROLE_USER')]
     public function unsubscribe(OutingRepository $outingRepository,  EntityManagerInterface $entityManager, int $id)
     {
         $outing = $outingRepository->find($id);
+
+        if (!$outing) {
+            throw new NotFoundHttpException();
+        }
 
         if ($outing->getRegistrationDeadline() > new \DateTime('now')) {
             $outing->removeRegistrant($this->getUser());
@@ -185,9 +205,14 @@ class OutingController extends AbstractController
     }
 
     #[Route('/sortie/{id}/maintenir', name: 'outing_removeCancelReason')]
+    #[IsGranted('ROLE_ANIMATOR')]
     public function removeCancelReason(OutingRepository $outingRepository,  EntityManagerInterface $entityManager, int $id)
     {
         $outing = $outingRepository->find($id);
+
+        if (!$outing) {
+            throw new NotFoundHttpException();
+        }
 
         $outing->setCancelReason(null);
 
@@ -195,6 +220,7 @@ class OutingController extends AbstractController
         $entityManager->flush();
 
         $now = new \DateTime('now');
+
 
         return $this->render('pages/outingShow.html.twig', [
             'outing' => $outing,

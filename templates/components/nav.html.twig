@@ -3,8 +3,12 @@
         <ul class="f a-cent j-betw">
 
             {% if is_granted('ROLE_USER') %}
-                <li><a href="{{ path('admin_panel') }}">Admin</a></li>
-                <li class="ml-32"><a href="{{ path('outing_create') }}">Créer une sortie</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin_panel') }}">Admin</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ANIMATOR') %}
+                    <li class="ml-32"><a href="{{ path('outing_create') }}">Créer une sortie</a></li>
+                {% endif %}
                 <li class="ml-32"><a href="{{ path('user_profile') }}">Profil</a></li>
             {% else %}
                 <li><a href="{{ path('user_register') }}">Inscription</a></li>

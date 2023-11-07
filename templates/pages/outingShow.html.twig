@@ -12,7 +12,6 @@
 {% block body %}
     {% include "components/nav.html.twig" %}
 
-    {% if outing %}
     <main>
         <section class="f j-betw mb-64 outing-show_top">
             <div>
@@ -38,11 +37,13 @@
                 <p><span class="strong">Nombre de participant:</span> {{ outing.registrants.count() }}/{{ outing.numberPlaces }}</p>
                 <p class="mb-16"><span class="strong">Date limite d'inscription:</span> {{ outing.registrationDeadline | date('d/m/Y') }}</p>
                 
-                {% if app.user and outing.registrationDeadline > now %}
-                    {% if outing.registrants.contains(app.user) %}
-                        <a href="{{ path('outing_unsubscribe', {'id': outing.id}) }}"><button>Désinscription</button></a>
-                    {% elseif outing.registrants.count() < outing.numberPlaces %}
-                        <a href="{{ path('outing_subscribe', {'id': outing.id}) }}"><button>Inscription</button></a>
+                {% if app.user %}
+                    {% if outing.registrationDeadline > now or is_granted('ROLE_ADMIN') %}
+                        {% if outing.registrants.contains(app.user) %}
+                            <a href="{{ path('outing_unsubscribe', {'id': outing.id}) }}"><button>Désinscription</button></a>
+                        {% elseif outing.registrants.count() < outing.numberPlaces %}
+                            <a href="{{ path('outing_subscribe', {'id': outing.id}) }}"><button>Inscription</button></a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
 
@@ -79,12 +80,6 @@
             <a href="{{ path('outing_update', {'id': outing.id}) }}"><button>Modifier/Annuler</button></a>
         {% endif %}
     </main>
-    {% else %}
-    <main class="f-col a-cent j-cent">
-        <h1 class="mb-64">Erreur 404</h1>
-        <h2> Il n'y a pas de sortie à cette url ...</h2>
-    </main>
-    {% endif %}
 
     {% include "components/footer.html.twig" %}
 {% endblock %}

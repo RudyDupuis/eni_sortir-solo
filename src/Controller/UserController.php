@@ -12,6 +12,7 @@ use App\Form\ProfileFormType;
 use App\Security\AppAuthenticator;
 use App\Service\ImageManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
@@ -75,6 +76,7 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/profile', name: 'user_profile')]
+    #[IsGranted('ROLE_USER')]
     public function profile(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ImageManager $imageManager): Response
     {
         /** @var \App\Entity\User $user */
