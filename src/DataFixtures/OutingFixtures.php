@@ -7,19 +7,25 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-/**
- * @DependsOn({"UserFixtures", "CampusFixtures"})
- */
 class OutingFixtures extends Fixture
 {
     private $userFixtures;
     private $campusFixtures;
 
-    public function __construct(UserFixtures $userFixtures, CampusFixtures $campusFixtures)
+    public function __construct(CampusFixtures $campusFixtures, UserFixtures $userFixtures)
     {
-        $this->userFixtures = $userFixtures;
         $this->campusFixtures = $campusFixtures;
+        $this->userFixtures = $userFixtures;
     }
+
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+            CampusFixtures::class,
+        ];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
@@ -32,13 +38,9 @@ class OutingFixtures extends Fixture
             $this->campusFixtures->getReference('Rennes'),
         ];
 
-        $userReferences = [
-            $this->userFixtures->getReference('user0'),
-            $this->userFixtures->getReference('user1'),
-            $this->userFixtures->getReference('user2'),
-            $this->userFixtures->getReference('user3'),
-            $this->userFixtures->getReference('user4'),
-        ];
+        for ($i = 0; $i < 5; $i++) {
+            $userReferences[] = $this->userFixtures->getReference('user' . $i);
+        }
 
         for ($i = 0; $i < 20; $i++) {
             $outing = new Outing();
@@ -49,11 +51,12 @@ class OutingFixtures extends Fixture
             $outing->setDuration($faker->numberBetween(30, 500));
             $outing->setDescription($faker->text(255));
             $outing->setCampus($faker->randomElement($campusReferences));
-            $outing->setOutingImage('fakeimage' . $i + 1 . '.jpg');
-            $outing->setNamePlace($faker->city);
-            $outing->setStreet($faker->streetAddress);
+            $outing->setOutingImage('fakeimage' . ($i + 1) . '.jpg');
+            $outing->setNamePlace($faker->city());
+            $outing->setStreet($faker->streetAddress());
             $outing->setPostalCode($faker->numberBetween(1000, 99999));
-            $outing->setCity($faker->city);
+            $outing->setCity($faker->city());
+            $outing->setAuthor($faker->randomElement($userReferences));
 
             $participants = $faker->randomElements($userReferences, $faker->numberBetween(1, count($userReferences)));
 
@@ -65,13 +68,5 @@ class OutingFixtures extends Fixture
         }
 
         $manager->flush();
-    }
-
-    public function getDependencies()
-    {
-        return [
-            UserFixtures::class,
-            CampusFixtures::class,
-        ];
     }
 }

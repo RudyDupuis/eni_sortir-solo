@@ -8,9 +8,6 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-/**
- * @DependsOn({"CampusFixtures"})
- */
 class UserFixtures extends Fixture
 {
     private $userPasswordHasher;
@@ -20,6 +17,13 @@ class UserFixtures extends Fixture
     {
         $this->userPasswordHasher = $userPasswordHasher;
         $this->campusFixtures = $campusFixtures;
+    }
+
+    public function getDependencies()
+    {
+        return [
+            CampusFixtures::class,
+        ];
     }
 
     public function load(ObjectManager $manager): void
@@ -50,16 +54,9 @@ class UserFixtures extends Fixture
             $user->setProfilePicture('fakepp' . $i + 1 . '.jpg');
 
             $manager->persist($user);
-            $this->addReference('user' . $i, $user);
+            $this->addReference(('user' . $i), $user);
         }
 
         $manager->flush();
-    }
-
-    public function getDependencies()
-    {
-        return [
-            CampusFixtures::class,
-        ];
     }
 }

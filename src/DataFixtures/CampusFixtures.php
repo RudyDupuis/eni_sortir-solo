@@ -12,8 +12,6 @@ class CampusFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-
-
         foreach ($this->campusesData as $campusName) {
             $campus = new Campus();
             $campus->setName($campusName);
