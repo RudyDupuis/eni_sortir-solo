@@ -1,0 +1,30 @@
+.admin_or {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.user-card {
+    background: #e8e8e8;
+    padding: 16px;
+    border-radius: 10px;
+    width: max-content;
+}
+
+.user-card_img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-image: url('../../images/defaultPP.png'); background-size: cover; background-position: center;
+}
+
+@media (max-width: 1160px) {
+    .searchForm {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .admin_or {
+        height: auto;
+    }
+}

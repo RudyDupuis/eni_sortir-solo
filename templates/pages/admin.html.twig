@@ -1,0 +1,84 @@
+{% import 'macros/adminUserCard.html.twig' as macros %}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Administration {{ parent() }}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ asset('style/pages/admin.css') }}">{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+
+    <main>
+        <h2 class="mb-64">Chercher un utilisateur</h2>
+
+        {{ form_start(searchForm, {'attr': {'class': 'f a-start j-even mb-32 searchForm'}}) }}
+            {{ form_row(searchForm.email, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Mail',
+                            'class': 'mb-32'
+                        }
+                    }) }}
+            <p class="admin_or mb-32">OU</p>
+            {{ form_row(searchForm.id, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Id',
+                            'class': 'mb-32'
+                        }
+                    }) }}
+
+            <button type="submit">Chercher</button>
+        {{ form_end(searchForm) }}
+
+        {% if userByEmail == null and userById == null %}
+        {% else %}
+            <div class="f-col a-cent mb-32">
+                <h3 class="a-self-start mb-16">Résultats de la recherche par email :</h3>
+                {% if userByEmail is not empty %}
+                    {{ macros.renderCard(userByEmail) }}
+                {% else %}
+                    <p class="tac">Aucun utilisateur trouvé</p>
+                {% endif %}
+            </div>
+
+            <div class="f-col a-cent mb-32">
+                <h3 class="a-self-start  mb-16">Résultats de la recherche par ID :</h3>
+                {% if userById is not empty %}
+                    {{ macros.renderCard(userById) }}
+                {% else %}
+                    <p class="tac">Aucun utilisateur trouvé</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <h2 class="mb-32">Gérer les rôles</h2>
+
+        <p class="tac mb-32">{{ roleFormMessage }}</p>
+
+        {{ form_start(roleForm, {'attr': {'class': 'f-col a-cent mb-32'}}) }}
+            {{ form_row(roleForm.userId, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Id de l\'utilisateur',
+                            'class': 'mb-32'
+                        }
+                    }) }}
+            {{ form_row(roleForm.role, {
+                        'label': false,
+                        'attr': {
+                            'class': 'mb-32'
+                        }
+                    }) }}
+            {{ form_row(roleForm.action, {
+                        'label': false,
+                        'attr': {
+                            'class': 'mb-32'
+                        }
+                    }) }}
+
+            <button type="submit">Ajouter/Supprimer un rôle</button>
+        {{ form_end(roleForm) }}
+    </main>
+
+{% endblock %}

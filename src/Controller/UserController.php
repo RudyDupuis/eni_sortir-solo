@@ -37,9 +37,10 @@ class UserController extends AbstractController
                 )
             );
 
+            $user->setRoles(['ROLE_USER']);
+
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $userAuthenticator->authenticateUser(
                 $user,
@@ -60,9 +61,8 @@ class UserController extends AbstractController
             return $this->redirectToRoute('outing_home');
         }
 
-        // get the login error if there is one
+
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('pages/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);

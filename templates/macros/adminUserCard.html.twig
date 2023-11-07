@@ -1,0 +1,24 @@
+{% macro renderCard(users) %}
+    {% for user in users %}
+        <div class="user-card">
+            <div class="f a-cent j-betw mb-16">
+                {% if user.profilePicture %}
+                    <div class="user-card_img" style="background-image: url('{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}'); background-size: cover; background-position: center;"></div>
+                {% else %}
+                    <div class="user-card_img"></div>
+                {% endif %}
+
+                <p>ID: {{ user.id }}</p>
+            </div>
+
+            <p>{{ user.firstName }} {{ user.lastName }}</p>
+            <p>{{ user.email }}</p>
+            <p><span class="strong">Campus :</span> {{ user.campus.name }}</p>
+            <p><span class="strong">Rôles :</span>
+                {% for role in user.roles %}
+                    {{ role }}
+                {% endfor %}
+            </p>
+        </div>
+    {% endfor %}
+{% endmacro %}

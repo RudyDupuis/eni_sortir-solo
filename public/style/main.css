@@ -147,6 +147,10 @@ button:hover {
     align-items: flex-end;
 }
 
+.a-self-start {
+    align-self: flex-start;
+}
+
 .j-cent {
     justify-content: center;
 }
