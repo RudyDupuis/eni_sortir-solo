@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
@@ -45,6 +46,10 @@ class OutingCreateFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Entrer une date de sortie',
                     ]),
+                    new GreaterThanOrEqual([
+                        'value' => new \DateTime(),
+                        'message' => 'La date de la sortie doit être ultérieure à la date actuelle.',
+                    ]),
                 ],
             ])
             ->add('registrationDeadline', DateType::class, [
@@ -53,6 +58,10 @@ class OutingCreateFormType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrer une date limite d\'inscription',
+                    ]),
+                    new GreaterThanOrEqual([
+                        'value' => new \DateTime(),
+                        'message' => 'La date limite d\'inscription doit être ultérieure à la date actuelle.',
                     ]),
                 ],
             ])
