@@ -4,11 +4,12 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     private $userPasswordHasher;
     private $campusFixtures;
@@ -30,13 +31,9 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        $campusReferences = [
-            $this->campusFixtures->getReference('Nantes'),
-            $this->campusFixtures->getReference('Niort'),
-            $this->campusFixtures->getReference('En ligne'),
-            $this->campusFixtures->getReference('Quimper'),
-            $this->campusFixtures->getReference('Rennes'),
-        ];
+        for ($i = 0; $i < 5; $i++) {
+            $campusReferences[] = $this->campusFixtures->getReference('campus' . $i);
+        }
 
         for ($i = 0; $i < 5; $i++) {
             $user = new User();

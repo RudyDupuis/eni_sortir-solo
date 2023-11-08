@@ -12,11 +12,14 @@ class CampusFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $i = 0;
+
         foreach ($this->campusesData as $campusName) {
             $campus = new Campus();
             $campus->setName($campusName);
             $manager->persist($campus);
-            $this->addReference($campusName, $campus);
+            $this->addReference(('campus' . $i), $campus);
+            $i += 1;
         }
 
         $manager->flush();
