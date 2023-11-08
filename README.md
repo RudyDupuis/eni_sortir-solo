@@ -19,3 +19,5 @@
 
 4. Lancer le serveur
    `symfony server:start`
+
+5. Ajouter un DSN dans .env.local pour la réinitialisation de mot de passe

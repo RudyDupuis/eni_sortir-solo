@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+
+    <main class="f-col a-cent j-cent">
+        <h1 class="tac mb-64">Réinitialisez votre mot de passe</h1>
+
+        {{ form_start(resetForm, {'attr': {'class': 'f-col a-cent'}}) }}
+            {{ form_row(resetForm.plainPassword, {
+            'label': false,
+            'attr': {
+                'placeholder': 'Nouveau mot de passe',
+                'class': 'mb-32'
+            },
+        }) }}
+        
+            <button type="submit">Réinitialiser le mot de passe</button>
+        {{ form_end(resetForm) }}
+    </main>
+
+    {% include "components/footer.html.twig" %}
+{% endblock %}

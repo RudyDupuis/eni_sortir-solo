@@ -41,11 +41,13 @@
             class="mb-32"
         >
 
-        <div class="mb-32">
+        <div class="mb-16">
             <label>
                 <input type="checkbox" name="_remember_me"> Se souvenir de moi
             </label>
         </div>
+
+        <a href="{{ path('app_forgot_password_request') }}" class="mb-32 forget-password">Mot de passe oublié ?</a>
 
         <button type="submit" class="mb-32">Se connecter</button>
     </form>

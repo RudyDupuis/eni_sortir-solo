@@ -16,6 +16,10 @@ body {
     right: 20%;
 }
 
+.forget-password{
+    text-transform: none;
+}
+
 @media (max-width: 1100px) {
     body {
         background: url(../images/bg700px.png) left bottom / auto no-repeat;

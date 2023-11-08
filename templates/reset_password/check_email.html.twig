@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe envoyé {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+    <main class="f-col a-cent j-cent">
+    <p class="tac mb-32">
+        Un mail vient de vous être envoyé pour réinitialiser votre mot de passe.
+        Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p class="tac">Si vous ne recevez pas d'e-mail, veuillez vérifier vos spams ou <a href="{{ path('app_forgot_password_request') }}">Réessayez</a>.</p>
+    </main>
+    {% include "components/footer.html.twig" %}
+{% endblock %}

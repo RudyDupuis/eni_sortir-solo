@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include "components/nav.html.twig" %}
+
+    <main class="f-col a-cent j-cent">
+        {% for flash_error in app.flashes('reset_password_error') %}
+            <p class="tac" role="alert">{{ flash_error }}</p>
+        {% endfor %}
+        
+        <h1 class="tac mb-64">Réinitialisez votre mot de passe</h1>
+
+        {{ form_start(requestForm, {'attr': {'class': 'f-col a-cent'}}) }}
+            {{ form_row(requestForm.email, {
+            'label': false,
+            'attr': {
+                'placeholder': 'Votre mail',
+                'class': 'mb-32'
+            },
+        }) }}
+
+            <button type="submit">Recevoir un mail</button>
+        {{ form_end(requestForm) }}
+    </main>
+    
+    {% include "components/footer.html.twig" %}
+{% endblock %}
