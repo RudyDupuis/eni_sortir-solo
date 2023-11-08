@@ -21,3 +21,7 @@
    `symfony server:start`
 
 5. Ajouter un DSN dans .env.local pour la réinitialisation de mot de passe
+   Changer les valeurs de identifiant, motdepasse, serveur et de port
+   `MAILER_DSN=smtp://identifaint:motdepasse@serveur:port`
+   Pour que symfony envoie des mails
+   `symfony console messenger:consume async`

@@ -192,6 +192,10 @@ button:hover {
     margin-left: 32px;
 }
 
+.mt-32 {
+    margin-top: 32px;
+}
+
 .p16-0 {
     padding: 16px 0;
 }
