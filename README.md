@@ -34,3 +34,5 @@ déroulement de l’activité.
 
 [Lien vers le Figma](https://www.figma.com/file/M3df9jC3hP63sRFEWhWhcT/ENI_Sortir-(Community)?type=design&node-id=0%3A1&mode=design&t=EwJkIfu4fX8P6njM-1)
 
+[Lien vers la documentation](https://hickory-dormouse-c7a.notion.site/ENI-Sortir-2f9ad0e7548a4f24ab5376d226d77cce)
+
