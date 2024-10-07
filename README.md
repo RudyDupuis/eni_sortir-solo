@@ -1,41 +1,36 @@
-# Installation et exécution du projet Symfony
+# ENI Sortir
 
-## Installation
+La société ENI souhaite développer pour ses stagiaires actifs ainsi que ses anciens stagiaires
+une plateforme web leur permettant d’organiser des sorties. La plateforme est une
+plateforme privée dont l’inscription sera gérée par le ou les administrateurs. Les sorties ainsi
+que les participants sont rattachés à un campus pour permettre une organisation
+géographique des sorties.
 
-1. Cloner le repository
-   
-   `git clone https://github.com/RudyDupuis/eni_sortir-solo.git`
-   
-   `cd eni_sortir-solo`
-   
-   `composer install`
+### Description du problème
 
-3. Configurer la base de donnée
-   
-   `cp .env .env.local`
-   
-   Changer les valeurs de User, password, url et NomBasededonnée en fonction de votre BDD
-   
-   `DATABASE_URL="mysql://User:password@url:3306/NomBasededonnée?serverVersion=8&charset=utf8mb4"`
-   
-   `symfony console doctrine:database:create`
-   
-   `symfony console doctrine:migrations:migrate`
+Le grand nombre de stagiaires et leur répartition sur différents campus ne permet pas une
+organisation facile d’événements ou de sorties.
 
-5. Ajouter des fausses données
-   
-   `symfony console doctrine:fixtures:load`
+- Il n’existe pas de canal de communication officiel pour proposer ou consulter les sorties.
+- Les outils actuels ne permettent pas de gérer d’invitations suivant la situation géographique ou les intérêts des stagiaires, ni de gérer le nombre d’invités, ni la date
+limite d’inscription.
 
-7. Lancer le serveur
-   
-   `symfony server:start`
+Une solution réussie consisterait à permettre l’organisation de ces sorties et d’anticiper le
+nombre de participants, le lieu de la sortie et autres informations à connaître pour le bon
+déroulement de l’activité.
 
-9. Ajouter un DSN dans .env.local pour la réinitialisation de mot de passe
-    
-   Changer les valeurs de identifiant, motdepasse, serveur et de port
-   
-   `MAILER_DSN=smtp://identifaint:motdepasse@serveur:port`
-   
-   Pour que symfony envoie des mails
-   
-   `symfony console messenger:consume async`
+**Délai : 1 semaines**
+
+### Technologies utilisées
+
+- Symfony 5.4.*
+- Php 8.2.12
+- Composer 2.6.5
+- Symfony Cli 5.6.2
+- Twig ^2.12|^3.0
+- Doctrine/orm ^2.16
+- MySQL 8.2
+- Mailer_DSN : www.brevo.com
+
+[Lien vers le Figma](https://www.figma.com/file/M3df9jC3hP63sRFEWhWhcT/ENI_Sortir-(Community)?type=design&node-id=0%3A1&mode=design&t=EwJkIfu4fX8P6njM-1)
+
